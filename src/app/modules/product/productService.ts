@@ -38,6 +38,5 @@ export const ProductService = {
     getAllProducts,
     getProductById,
     updateProductById,
-    deleteProductById,
-    // getProductBySearch
+    deleteProductById
 }
