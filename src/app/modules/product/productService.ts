@@ -7,10 +7,16 @@ const createNewProduct = async (productData: TProduct) => {
     return result;
 }
 
-const getAllProducts = async () => {
-    const result = await Product.find();
-    return result;
-}
+const getAllProducts = async (searchTerm?: string) => {
+    if (searchTerm) {
+        const regex = new RegExp(searchTerm, "i");
+        const result = await Product.find({ tags: { $all: [regex] } });
+        return result;
+    } else {
+        const result = await Product.find();
+        return result;
+    }
+};
 
 const getProductById = async (productId: string) => {
     const result = await Product.findById(productId);
@@ -27,17 +33,11 @@ const deleteProductById = async (productId: string) => {
     return result;
 }
 
-const getProductBySearch = async (searchTerm: string) => {
-    const regex = new RegExp(searchTerm, "i");
-    const result = await Product.find({ tags: { $all: [regex] } });
-    return result;
-};
-
 export const ProductService = {
     createNewProduct,
     getAllProducts,
     getProductById,
     updateProductById,
     deleteProductById,
-    getProductBySearch
+    // getProductBySearch
 }
