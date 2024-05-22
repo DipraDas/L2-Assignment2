@@ -14,12 +14,12 @@ const createProduct = async (req: Request, res: Response) => {
             data: result
         })
     }
-    catch (err) {
+    catch (error: any) {
         res.status(500).json({
             success: false,
-            message: 'Something went wrong',
-            error: err
-        })
+            message: error.message || "Something went wrong",
+            error: error,
+        });
     }
 }
 
@@ -31,12 +31,13 @@ const getAllProducts = async (req: Request, res: Response) => {
             message: "Products fetched successfully!",
             data: result,
         });
-    } catch (err) {
+    }
+    catch (error: any) {
         res.status(500).json({
             success: false,
-            message: 'Something went wrong',
-            error: err
-        })
+            message: error.message || "Something went wrong",
+            error: error,
+        });
     }
 };
 
@@ -57,17 +58,48 @@ const getProductById = async (req: Request, res: Response) => {
             message: 'Product fetched successfully!',
             data: result
         });
-    } catch (err) {
+    }
+    catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message || "Something went wrong",
+            error: error,
+        });
+    }
+}
+
+const updateProductById = async (req: Request, res: Response) => {
+    try {
+        const { productId } = req.params;
+        const productData = req.body;
+        const zodParsedData = productValidationSchema.parse(productData);
+
+        const result = await ProductService.updateProductById(productId, zodParsedData);
+
+        if (!result) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Product updated successfully!',
+            data: result
+        });
+    } catch (error) {
         res.status(500).json({
             success: false,
             message: 'Something went wrong',
-            error: err
-        })
+            error: error
+        });
     }
 }
 
 export const ProductController = {
     createProduct,
     getAllProducts,
-    getProductById
+    getProductById,
+    updateProductById
 }
