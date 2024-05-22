@@ -24,11 +24,6 @@ const productInventorySchema = new Schema<TInventory>({
 })
 
 const productSchema = new Schema<TProduct>({
-    id: {
-        type: String,
-        required: [true, 'Product Id is required'],
-        unique: true
-    },
     name: {
         type: String,
         required: [true, 'Product Name is required']
@@ -49,7 +44,7 @@ const productSchema = new Schema<TProduct>({
         type: [String],
         required: [true, 'Product Tags are required']
     },
-    variants: productVariantSchema,
+    variants: [productVariantSchema],
     inventory: productInventorySchema
 })
 
