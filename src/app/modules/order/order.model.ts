@@ -4,8 +4,7 @@ import { TOrder } from "./order.interface";
 const orderSchema = new Schema<TOrder>({
     email: {
         type: String,
-        required: [true, 'Email is required'],
-        match: [/.+\@.+\..+/, 'Please fill a valid email address']
+        required: [true, 'Email is required']
     },
     productId: {
         type: String,

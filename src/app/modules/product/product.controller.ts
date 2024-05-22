@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Request, Response } from "express";
 import { ProductService } from "./product.service";
 import productValidationSchema from "./product.validation";
@@ -113,8 +115,6 @@ const deleteProduct = async (req: Request, res: Response) => {
     try {
         const { productId } = req.params;
         const result = await ProductService.deleteProductById(productId);
-
-        console.log(result);
 
         if (!result) {
             return res.status(404).json({
