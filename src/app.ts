@@ -8,10 +8,6 @@ app.use(cors());
 
 // application route
 
-let a;
-
-a = 6;
-
 app.get("/", (req: Request, res: Response) => {
     res.send("hello world");
 });
