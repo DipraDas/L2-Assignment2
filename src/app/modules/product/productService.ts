@@ -23,16 +23,21 @@ const updateProductById = async (productId: string, product: TProduct) => {
 }
 
 const deleteProductById = async (productId: string) => {
-    console.log('--', productId)
     const result = await Product.findByIdAndDelete(productId)
-    console.log('***', result);
     return result;
 }
+
+const getProductBySearch = async (searchTerm: string) => {
+    const regex = new RegExp(searchTerm, "i");
+    const result = await Product.find({ tags: { $all: [regex] } });
+    return result;
+};
 
 export const ProductService = {
     createNewProduct,
     getAllProducts,
     getProductById,
     updateProductById,
-    deleteProductById
+    deleteProductById,
+    getProductBySearch
 }
