@@ -1,4 +1,4 @@
-export interface IOrder {
+export interface TOrder {
     email: string;
     productId: string;
     price: number;
